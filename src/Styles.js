@@ -1,20 +1,25 @@
-/*
-Создайте функции:
-   hasClass(elem, elemСlass),
-   addClass(elem, elemСlass),
-   removeClass(elem, elemСlass),
-   toggleClass(elem, elemСlass),
-которые позволяют проверить, есть ли у элемента заданный CSS-класс, добавить к нему CSS-класс, удалить CSS-класс и переключить CSS-класс.
+export function hasClass(elem, elemClass) {
+    return new RegExp(`(^|\\s)${elemClass}(\\s|$)`).test(elem.className);
+}
 
-В функции передаются 2 параметра:
-   elem - DOM-элемент, который проверяется,
-   elemСlass - название класса, которое проверяется.
-*/
+export function addClass(elem, elemClass) {
+    if (!hasClass(elem, elemClass)) {
+        elem.className = (elem.className + ' ' + elemClass).trim();
+    }
+}
 
-export function hasClass(elem, elemClass) {}
+export function removeClass(elem, elemClass) {
+    elem.className = elem.className
+        .split(/\s+/)
+        .filter((cls) => cls !== elemClass)
+        .join(' ')
+        .trim();
+}
 
-export function addClass(elem, elemClass) {}
-
-export function removeClass(elem, elemClass) {}
-
-export function toggleClass(elem, elemClass) {}
+export function toggleClass(elem, elemClass) {
+    if (hasClass(elem, elemClass)) {
+        removeClass(elem, elemClass);
+    } else {
+        addClass(elem, elemClass);
+    }
+}
